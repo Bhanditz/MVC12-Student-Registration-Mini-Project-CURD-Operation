@@ -1,0 +1,9 @@
+create table Student1(
+                                                  sno number(5) primary key,
+                                                   sname varchar2(20),
+                                                   saddrs varchar2(20),
+                                                  course varchar2(20),
+                                                  fee number(10,2));
+                                                  
+                                                  
+ create sequence seq_student start with 1000 increment by 1;

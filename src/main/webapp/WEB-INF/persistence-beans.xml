@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- Configure JndiObjectFactoryBean class -->
+	<bean id="ds" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/comp/env/DsJndi" />
+	</bean>
+
+	<!-- Configure Jdbc Template Class -->
+	<bean id="template" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="ds" />
+	</bean>
+
+	<!--Configure StudentDAOImpl class -->
+	<bean id="stDao" class="com.nt.dao.StudentDAOImpl">
+		<constructor-arg ref="template" />
+	</bean>
+</beans>

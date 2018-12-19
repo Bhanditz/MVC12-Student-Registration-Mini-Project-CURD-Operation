@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- Configure SimpleUrlHandlerMapping Class -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="home.htm">pvc</prop>
+				<prop key="list.htm">slac</prop>
+				<prop key="form.htm">studsfc</prop>
+				<prop key="edit.htm">upsfc</prop>
+				<prop key="delete.htm">dslac</prop>
+			</props>
+		</property>
+	</bean>
+    <!--Configure StudentFormValidator Class -->
+    <bean id="validate" class="com.nt.validator.StudentFormValidator"/>
+    
+	<!--Configure ParameterziableViewController -->
+	<bean id="pvc"
+		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="home" />
+	</bean>
+
+	<!--Configure StudentListController class -->
+	<bean id="slac" class="com.nt.controller.StudentListController">
+		<constructor-arg ref="stService" />
+	</bean>
+
+	<!-- Configure StudentDeleteController class -->
+	<bean id="dslac" class="com.nt.controller.StudentDeleteController">
+		<constructor-arg ref="stService" />
+	</bean>
+
+	<!--Configure StudentInsertController class -->
+	<bean id="studsfc" class="com.nt.controller.StudentInsertController">
+		<property name="commandName" value="stdCmd" />
+		<property name="commandClass" value="com.nt.command.StudentCommand" />
+		<property name="formView" value="insert_form" />
+		<property name="sessionForm" value="true" />
+		<property name="validator" ref="validate"/>
+		<constructor-arg ref="stService" />
+	</bean>
+
+	<!--Configure StudentUpdateController class -->
+	<bean id="upsfc" class="com.nt.controller.StudentUpdateController">
+		<property name="commandName" value="stdCmd" />
+		<property name="commandClass" value="com.nt.command.StudentCommand" />
+		<property name="formView" value="update_form" />
+		<property name="sessionForm" value="true" />
+		<property name="validator" ref="validate"/>
+		<constructor-arg ref="stService" />
+	</bean>
+
+	<!-- Configure InternalResourceView Resolver class -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!--Configure ResourceBundleMessageSource -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	<property name="basename" value="com/nt/commons/errorMsg"/>
+	</bean>
+
+</beans>
